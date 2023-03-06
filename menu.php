@@ -1,4 +1,5 @@
 <?php
+include_once "util.php";
 class Menu{
     protected $text;
     protected $sessionId ;
@@ -21,10 +22,31 @@ class Menu{
         $response .= "1 Register\n";
         echo $response;
     }
-    public function RegisterMenu(){}
-    public function SendMoneyMenu(){}
-    public function WithdrawMoneyMenu(){}
-    public function CheckBalanceMenu(){}
+    public function RegisterMenu($textArray){
+        $level = count($textArray);
+
+        if($level == 1){
+            echo "CON Enter your full name : ";
+        }else if($level ==2){
+            echo "CON Enter your pin";
+        }else if($level == 3){
+            echo "CON Confirm your pin";
+        }else if($level ==4){
+            $name = $textArray[1];
+            $pin = $textArray[2];
+            $conPin = $textArray[3];
+
+            if($pin != $conPin){
+                echo "END Pin does not match";
+            }else{
+                //register the user;
+                echo "END SUCCESS";
+            }
+        }
+    }
+    public function SendMoneyMenu($textArray){}
+    public function WithdrawMoneyMenu($textArray){}
+    public function CheckBalanceMenu($textArray){}
 
 }
 ?>

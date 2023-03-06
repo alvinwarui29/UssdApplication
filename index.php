@@ -15,10 +15,33 @@ if($text=="" && !$isRegistered){
 }else if($text=="" && $isRegistered){
     //text is empty and user is unregistered
     $menu -> MainMenuUnRegistered();
-}else if($isRegistered){
+}else if(!$isRegistered){
     //text is not empty and user is regisered
+    $textArray = explode("*",$text);
+    switch($textArray[0]){
+        case 1 :
+            $menu->SendMoneyMenu($textArray);
+            break;
+        case 2 :
+            $menu->WithdrawMoneyMenu($textArray);
+            break;
+        case 3 :
+            $menu->CheckBalanceMenu($textArray);
+            break;
+        default:
+            echo "END Invalid choice try again";
+    }
+
 }else{
     //user is unregistered and text is not empty
+    $textArray = explode("*",$text);
+    switch($textArray[0]){
+        case 1:
+            $menu -> RegisterMenu($textArray);
+            break;
+        default :
+            echo "END invalid input ";
+    }
 }
 
 ?>
