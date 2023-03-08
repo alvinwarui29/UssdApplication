@@ -44,7 +44,39 @@ class Menu{
             }
         }
     }
-    public function SendMoneyMenu($textArray){}
+    public function SendMoneyMenu($textArray){
+        $level = count($textArray);
+        if($level == 1){
+            echo "CON Enter the number of the receiver\n";
+        }else if($level ==2){
+            echo "CON Enter amount";
+        }else if($level ==3 ){
+            echo "CON Enter your pin";
+        }else if ($level == 4){
+            $response = "CON Send". $textArray[2] ." to ". $textArray[1] . "\n";
+            $response .= "1. Confirm\n";
+            $response .= "2. Cancel\n";
+            $response .= Util::$GO_BACK . "back\n";
+            $response .= Util::$GO_TO_MAIN_MENU . "mainmenu\n";
+            echo $response;
+        }else if ($level == 5 && $textArray[4] ==1 ){
+            // User is Confirming
+            // send money
+            echo "END Money sent!";
+        }else if ($level == 5 && $textArray[4] ==2 ){
+            // User has cancelled
+            echo "END Confirmed Cancellation";
+        }else if ($level == 5 && $textArray[4] ==Util::$GO_BACK ){
+            // User is going back
+            echo "END Going back...";
+        }
+        else if ($level == 5 && $textArray[4] ==Util::$GO_TO_MAIN_MENU ){
+            // User is going to main menu
+            echo "END Going to Main Menu";
+        }else{
+            echo" END Invalid Choice!";
+        }
+    }
     public function WithdrawMoneyMenu($textArray){}
     public function CheckBalanceMenu($textArray){}
 
