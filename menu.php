@@ -4,11 +4,7 @@ class Menu{
     protected $text;
     protected $sessionId ;
 
-    function __construct($text,$sessionId )
-    {
-        $this->text = $text;
-        $this->sessionId = $sessionId;
-    }
+    function __construct(){}
 
     public function MainMenuRegistered(){
         $response = "CON Welcome to the app\n";
@@ -56,8 +52,8 @@ class Menu{
             $response = "CON Send". $textArray[2] ." to ". $textArray[1] . "\n";
             $response .= "1. Confirm\n";
             $response .= "2. Cancel\n";
-            $response .= Util::$GO_BACK . "back\n";
-            $response .= Util::$GO_TO_MAIN_MENU . "mainmenu\n";
+            $response .= Util::$GO_BACK . " back\n";
+            $response .= Util::$GO_TO_MAIN_MENU . " mainmenu\n";
             echo $response;
         }else if ($level == 5 && $textArray[4] ==1 ){
             // User is Confirming
@@ -109,6 +105,27 @@ class Menu{
         }else{
             echo "END Invalid pin";
         }
+    }
+    public function middleware($text){
+        return $this->goBack($this->goMainMenu($text));
+    }
+    public function goBack($text){
+        $explodedtext = explode("*",$text);
+        while(array_search(Util::$GO_BACK,$explodedtext) != false){
+            $firstIndex =array_search(Util::$GO_BACK,$explodedtext);
+            array_splice($explodedtext,$firstIndex-1,2);
+        
+        }
+        return join("*",$explodedtext);
+    }
+    public function goMainMenu($text){
+        $explodedtext = explode("*",$text);
+        while(array_search(Util::$GO_TO_MAIN_MENU,$explodedtext) != false){
+            $firstIndex =array_search(Util::$GO_TO_MAIN_MENU,$explodedtext);
+            $explodedtext = array_slice($explodedtext,$firstIndex+1);
+        
+        }
+        return join("*",$explodedtext);
     }
 
 }
