@@ -100,7 +100,16 @@ class Menu{
             echo "END Invalid Option";
         }
     }
-    public function CheckBalanceMenu($textArray){}
+    public function CheckBalanceMenu($textArray){
+        $level = count($textArray);
+        if($level ==1){
+            echo "CON Enter pin";
+        }else if ($level ==2){
+            echo "CON Checking balance";
+        }else{
+            echo "END Invalid pin";
+        }
+    }
 
 }
 ?>
