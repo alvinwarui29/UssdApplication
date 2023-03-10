@@ -11,6 +11,7 @@ class DBConnector{
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
         ];
+        
         try{
             $this->pdo = new PDO($dsn,Util::$DB_USER,
             Util::$DB_USER_PASS,$options

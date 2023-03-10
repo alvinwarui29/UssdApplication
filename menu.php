@@ -83,13 +83,13 @@ class Menu{
     public function WithdrawMoneyMenu($textArray){
         $level = count($textArray);
         if ($level ==1){
-            echo "CON Enter agent number";
+            echo " CON Enter agent number";
 
         }else if ($level ==2){
-            echo "CON Enter Amount";
+            echo " CON Enter Amount";
 
         }else if($level ==3){
-            echo "CON Enter your pin";
+            echo " CON Enter your pin";
         }else if($level ==4){
             echo "CON Withdraw ". $textArray[2] . " From agent " . $textArray[1] . "\n 1. Confirm\n 2. Cancel\n";
         }else if ($level ==5 && $textArray[4 ==1]){
