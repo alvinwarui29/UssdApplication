@@ -35,7 +35,24 @@ class Transaction{
             return "An error occured";
         }
     }
-    public function withdrawCash($pdo,$uid,$aid,$newbalance){}
+    public function withdrawCash($pdo,$uid,$aid,$newbalance){
+        $pdo->setAttribute(PDO::ATTR_AUTOCOMMIT,false);
+        try{
+            $pdo->beginTransaction();
+            $stmtT = $pdo->prepare("insert into transaction (amount,uid,aid,ttype) values (?,?,?,?)");
+            $stmtU = $pdo->prepare ("update user set balance=? where uid=?" );
+            
+            $stmtT->execute([$this->getAmount(),$uid,$aid,$this->getTType()]);
+            $stmtU->execute([$newbalance,$uid]);
+            $pdo->commit();
+            return true;
+
+
+        }catch(PDOException $e){
+            $pdo->rollback();
+            return "An error occured";
+        }
+    }
 }
 
 ?>
