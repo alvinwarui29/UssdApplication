@@ -62,9 +62,31 @@ class User{
         $row = $stmt->fetch();
         return $row["name"];
     }
-    public function readUserID ($pdo){}
-    public function correctPin ($pdo){}
-    public function checkBalance ($pdo){}
+    public function readUserID ($pdo){
+        $stmt = $pdo->prepare("SELECT uid FROM ussdsms.user WHERE phone = ?");
+        $stmt->execute([$this->getPhone()]);
+        $row = $stmt->fetch();
+        return $row['uid'];
+    }
+    public function correctPin ($pdo){
+        $stmt = $pdo->prepare("SELECT pin FROM ussdsms.user WHERE phone = ?");
+        $stmt->execute([$this->getPhone()]);
+        $row = $stmt->fetch();
+        if($row ==null){
+            return false;
+        }
+        if(password_verify($this->getPin(),$row['pin'])){
+            return true;
+        }
+        return false;
+    }
+    public function checkBalance ($pdo){
+        $stmt = $pdo->prepare("SELECT uid FROM ussdsms.user WHERE phone = ?");
+        $stmt->execute([$this->getPhone()]);
+        $row = $stmt->fetch();
+        return $row['balance'];
+
+    }
 
 
 
