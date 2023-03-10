@@ -1,13 +1,14 @@
 <?php
 include_once "util.php";
+include_once "user.php";
 class Menu{
     protected $text;
     protected $sessionId ;
 
     function __construct(){}
 
-    public function MainMenuRegistered(){
-        $response = "CON Welcome to the app\n";
+    public function MainMenuRegistered($name){
+        $response = "CON Welcome".$name." to the app\n";
         $response .= "1. Send Money\n";
         $response .= "2. Withdraw money\n";
         $response .= "3. Check Balance\n";
@@ -18,7 +19,7 @@ class Menu{
         $response .= "1 Register\n";
         echo $response;
     }
-    public function RegisterMenu($textArray){
+    public function RegisterMenu($textArray,$phoneNumber,$pdo){
         $level = count($textArray);
 
         if($level == 1){
@@ -36,6 +37,12 @@ class Menu{
                 echo "END Pin does not match";
             }else{
                 //register the user;
+                $user = new User($phoneNumber);
+                $user->setName($name);
+                $user->setPin($pin);
+                $user->setBalance(Util::$USER_BALANCE);
+                $user->setPhone($phoneNumber);
+                $user->register($pdo);
                 echo "END SUCCESS";
             }
         }
