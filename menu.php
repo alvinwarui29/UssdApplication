@@ -134,6 +134,9 @@ class Menu{
         }
         return join("*",$explodedtext);
     }
+    public function addCountryCode($phoneNumber){
+        return Util::$COUNTRY_CODE . substr($phoneNumber,1);
+    }
 
 }
 ?>

@@ -84,7 +84,7 @@ class User{
         $stmt = $pdo->prepare("SELECT uid FROM ussdsms.user WHERE phone = ?");
         $stmt->execute([$this->getPhone()]);
         $row = $stmt->fetch();
-        return $row['balance'];
+        return $row['balance']; 
 
     }
 
