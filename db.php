@@ -21,6 +21,13 @@ class DBConnector{
         }catch(PDOException $e){
             echo $e->getMessage();
         }
+       
+    }
+    public function connectToDB(){
+        return $this->pdo;
+    }
+    public function closeDB(){
+        $this->pdo = null;
     }
 }
 
