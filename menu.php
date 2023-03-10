@@ -1,6 +1,7 @@
 <?php
 include_once "util.php";
 include_once "user.php";
+include_once "transactions.php";
 class Menu{
     protected $text;
     protected $sessionId ;
@@ -47,8 +48,11 @@ class Menu{
             }
         }
     }
-    public function SendMoneyMenu($textArray){
+    public function SendMoneyMenu($textArray,$sender,$pdo,$sessionId){
         $level = count($textArray);
+        $receiver = null;
+        $nameOfReceiver = null;
+        $response = "";
         if($level == 1){
             echo "CON Enter the number of the receiver\n";
         }else if($level ==2){
@@ -56,16 +60,51 @@ class Menu{
         }else if($level ==3 ){
             echo "CON Enter your pin";
         }else if ($level == 4){
-            $response = "CON Send". $textArray[2] ." to ". $textArray[1] . "\n";
+            $receiverMobile = $textArray[1];
+            $receiverMobileWithCode = $this->addCountryCode($receiverMobile);
+            $receiver = new User($receiverMobileWithCode);
+            $nameOfReceiver = $receiver->readName($pdo);
+
+
+            $response .= "Send". $textArray[2] ." to ". $nameOfReceiver."-".$receiverMobile . "\n";
             $response .= "1. Confirm\n";
             $response .= "2. Cancel\n";
             $response .= Util::$GO_BACK . " back\n";
             $response .= Util::$GO_TO_MAIN_MENU . " mainmenu\n";
-            echo $response;
+            echo "CON". $response;
         }else if ($level == 5 && $textArray[4] ==1 ){
             // User is Confirming
             // send money
-            echo "END Money sent!";
+            $pin = $textArray[3];
+            $amount = $textArray[2];
+            $ttype ="send";
+            $sender -> setPin($pin);
+            $newSenderBalance = $sender->checkBalance($pdo) - $amount - Util::$TRANSACTION_FEE;
+            $receiver = new User($this->addCountryCode($textArray[1]));
+            $newRecieverBalance = $receiver->checkBalance($pdo) + $amount;
+
+            if($sender->correctPin($pdo)==false){
+                echo "END Wrong pin";
+                //send smss
+            }else{
+                $txn = new Transaction($amount,$ttype);
+                $result = $txn->sendMoney($pdo,$sender->readUserID($pdo),$receiver->readUserID($pdo),$newSenderBalance,$newRecieverBalance);
+
+                if($result == true){
+                    echo "END success will recieve a confirmation message shortly";
+
+                }else{
+                    echo "CON" .$result;
+                }
+
+
+
+
+            }
+
+
+
+
         }else if ($level == 5 && $textArray[4] ==2 ){
             // User has cancelled
             echo "END Confirmed Cancellation";
