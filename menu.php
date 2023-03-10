@@ -6,6 +6,7 @@ class Menu{
     protected $text;
     protected $sessionId ;
 
+
     function __construct(){}
 
     public function MainMenuRegistered($name){
@@ -142,12 +143,18 @@ class Menu{
             echo "END Invalid Option";
         }
     }
-    public function CheckBalanceMenu($textArray){
+    public function CheckBalanceMenu($textArray,$user,$pdo){
         $level = count($textArray);
         if($level ==1){
             echo "CON Enter pin";
         }else if ($level ==2){
             echo "CON Checking balance";
+            $user->setPin($textArray[1]);
+            if($user->correctPin($pdo)){
+                echo "END Your balance is ". $user->checkBalance($pdo);
+            }else{
+                echo "END wrong pin"; //sendsms
+            }
         }else{
             echo "END Invalid pin";
         }

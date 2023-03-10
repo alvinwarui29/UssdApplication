@@ -60,13 +60,13 @@ class User{
         $stmt = $pdo->prepare("SELECT * FROM ussdsms.user WHERE phone = ?");
         $stmt->execute([$this->getPhone()]);
         $row = $stmt->fetch();
-        return $row["name"];
+        return $row["name"] ?? null;
     }
     public function readUserID ($pdo){
         $stmt = $pdo->prepare("SELECT uid FROM ussdsms.user WHERE phone = ?");
         $stmt->execute([$this->getPhone()]);
         $row = $stmt->fetch();
-        return $row['uid'];
+        return $row['uid'] ?? null;
     }
     public function correctPin ($pdo){
         $stmt = $pdo->prepare("SELECT pin FROM ussdsms.user WHERE phone = ?");
@@ -81,10 +81,10 @@ class User{
         return false;
     }
     public function checkBalance ($pdo){
-        $stmt = $pdo->prepare("SELECT uid FROM ussdsms.user WHERE phone = ?");
+        $stmt = $pdo->prepare("SELECT balance FROM ussdsms.user WHERE phone = ?");
         $stmt->execute([$this->getPhone()]);
         $row = $stmt->fetch();
-        return $row['balance']; 
+        return $row['balance'] ?? null; 
 
     }
 

@@ -31,7 +31,7 @@ if($text=="" && $user->isUserRegistered($pdo)){
             $menu->WithdrawMoneyMenu($textArray);
             break;
         case 3 :
-            $menu->CheckBalanceMenu($textArray);
+            $menu->CheckBalanceMenu($textArray,$user,$pdo);
             break;
         default:
             echo "CON invalid Choice\n" . $menu->MainMenuRegistered($user->readName($pdo)) ;
