@@ -25,7 +25,7 @@ if($text=="" && $user->isUserRegistered($pdo)){
     $textArray = explode("*",$text);
     switch($textArray[0]){
         case 1 :
-            $menu->SendMoneyMenu($textArray);
+            $menu->SendMoneyMenu($textArray,$user,$pdo,$sessionId);
             break;
         case 2 :
             $menu->WithdrawMoneyMenu($textArray);
