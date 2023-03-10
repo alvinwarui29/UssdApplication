@@ -8,6 +8,7 @@ class Util{
     static $GO_BACK = "98";
     static $GO_TO_MAIN_MENU = "99";
     static $USER_BALANCE = 4000;
+    static $COUNTRY_CODE = "+254";
 }
 
 ?>
