@@ -120,7 +120,7 @@ class Menu{
             echo" END Invalid Choice!";
         }
     }
-    public function WithdrawMoneyMenu($textArray){
+    public function WithdrawMoneyMenu($textArray,$user,$pdo){
         $level = count($textArray);
         if ($level ==1){
             echo " CON Enter agent number";
